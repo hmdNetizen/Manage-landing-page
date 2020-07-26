@@ -244,6 +244,7 @@ const Footer = () => {
                     className={classes.root}
                     InputProps={{
                       classes: { input: classes.input },
+                      placeholder: "Updates in your inbox..",
                     }}
                   />
                   <Button

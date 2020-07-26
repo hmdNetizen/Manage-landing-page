@@ -26,6 +26,15 @@ export const theme = createMuiTheme({
   },
   typography: {
     fontFamily: "Be Vietnam, sans-serif",
+    h1: {
+      fontSize: "3em",
+      color: darkBlue,
+      fontWeight: 500,
+    },
+    subtitle1: {
+      fontSize: "1.2rem",
+      color: greyishBlue,
+    },
     subtitle2: {
       fontSize: "1rem",
       fontWeight: 300,
