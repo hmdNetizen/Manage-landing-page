@@ -31,13 +31,28 @@ export const theme = createMuiTheme({
       color: darkBlue,
       fontWeight: 500,
     },
+    h2: {
+      fontSize: "2.5em",
+      color: darkBlue,
+      fontWeight: 500,
+    },
+    h5: {
+      fontSize: "1.2rem",
+      fontWeight: 500,
+      color: darkBlue,
+    },
+    h6: {
+      color: darkBlue,
+    },
     subtitle1: {
       fontSize: "1.2rem",
       color: greyishBlue,
+      fontWeight: 300,
     },
     subtitle2: {
       fontSize: "1rem",
       fontWeight: 300,
+      color: greyishBlue,
     },
     btn: {
       padding: ".5em 1.5em",

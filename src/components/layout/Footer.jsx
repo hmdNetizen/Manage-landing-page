@@ -202,7 +202,6 @@ const Footer = () => {
                         variant="contained"
                         classes={{
                           root: classes.btn,
-                          placeholder: "Updates in your inbox..",
                         }}
                       >
                         Go

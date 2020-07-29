@@ -102,15 +102,14 @@ const Header = (props) => {
   }));
 
   const classes = useStyles();
+  //Responsive breakpoints
+  const theme = useTheme();
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
 
   //state values
   const [value, setValue] = useState(0);
   const [selectedTab, setSelectedTab] = useState(0);
   const [openDrawer, setOpenDrawer] = useState(false);
-
-  //Responsive breakpoints
-  const theme = useTheme();
-  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
 
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
