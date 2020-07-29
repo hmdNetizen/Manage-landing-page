@@ -3,19 +3,12 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import desktopBackground from "../../images/bg-tablet-pattern.svg";
 import illustration from "../../images/illustration-intro.svg";
-import imageOne from "../../images/avatar-anisha.png";
-import imageTwo from "../../images/avatar-ali.png";
-import imageThree from "../../images/avatar-richard.png";
-import imageFour from "../../images/avatar-shanai.png";
+import Testimonials from "../Testimonials";
 
 const useStyles = makeStyles((theme) => ({
   backgroundContainer: {
@@ -155,41 +148,19 @@ const useStyles = makeStyles((theme) => ({
     height: "25em",
     position: "absolute",
     left: "-15em",
-
-    // [theme.breakpoints.down("sm")]: {
-    //   left: "50em",
-    //   width: "25em",
-    //   top: "-40em",
-    // },
   },
   testimonialContainer: {
     position: "relative",
+    marginTop: "5em",
     marginBottom: "40em",
-  },
-  card: {
-    "&.MuiCard-root": {
-      overflow: "visible",
-    },
-    maxWidth: "40em",
-    padding: "5em",
-    textAlign: "center",
-  },
-  cardPicture: {
-    width: "150px",
-    position: "absolute",
-    top: "-10em",
-    left: "50%",
-    transform: "translateX(-50%)",
   },
 }));
 
 const LandingPage = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
-  const matchesXXS = useMediaQuery("(maxWidth: 360px)");
-
-  const testimonials = [];
 
   return (
     <Grid container direction="column">
@@ -389,37 +360,22 @@ const LandingPage = () => {
       </Grid>
       {/* Testimonial Section */}
       <Grid item className={classes.testimonialContainer}>
-        <Grid item style={{ textAlign: "center" }}>
-          <Typography
-            variant="h2"
-            className={classes.secondaryHeading}
-            style={{ marginBottom: "5em" }}
-          >
+        <Grid
+          item
+          style={{
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h2" className={classes.secondaryHeading}>
             What they've said
           </Typography>
         </Grid>
-        <Grid container justify="center" style={{ position: "absolute" }}>
-          <Card classes={{ root: classes.card }}>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                image={imageOne}
-                alt="Testimonial"
-                title="Anisha Li"
-                className={classes.cardPicture}
-              />
-              <CardContent>
-                <Typography variant="h6" style={{ marginBottom: "1em" }}>
-                  Anisha Li
-                </Typography>
-                <Typography variant="subtitle2" style={{ lineHeight: 2 }}>
-                  “Manage has supercharged our team’s workflow. The ability to
-                  maintain visibility on larger milestones at all times keeps
-                  everyone motivated.”
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+        <Grid
+          container
+          justify="center"
+          style={{ position: "absolute", top: matchesMD ? "5em" : "2.5em" }}
+        >
+          <Testimonials />
         </Grid>
       </Grid>
     </Grid>
