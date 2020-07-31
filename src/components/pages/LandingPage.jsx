@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -9,6 +11,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import desktopBackground from "../../images/bg-tablet-pattern.svg";
 import illustration from "../../images/illustration-intro.svg";
 import Testimonials from "../Testimonials";
+import bgSimplify from "../../images/bg-simplify-section-desktop.svg";
 
 const useStyles = makeStyles((theme) => ({
   backgroundContainer: {
@@ -110,6 +113,21 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: "0 10px 15px rgba(242, 95, 58, .7)",
     },
   },
+  btnWhite: {
+    ...theme.typography.btn,
+    background: theme.palette.common.lightGrey,
+    color: theme.palette.common.red,
+    fontWeight: 500,
+
+    "&:hover": {
+      background: theme.palette.common.lightGrey,
+      color: theme.palette.secondary.light,
+    },
+
+    [theme.breakpoints.down("xs")]: {
+      width: "150px",
+    },
+  },
   headingAbout: {
     width: "100%",
     borderTopLeftRadius: "50px",
@@ -121,6 +139,9 @@ const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.down("sm")]: {
       background: theme.palette.common.paleRed,
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1rem",
     },
   },
   numbering: {
@@ -134,11 +155,18 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       padding: ".3em 1em",
     },
+    [theme.breakpoints.down("xs")]: {
+      padding: ".25em .75em",
+      marginRight: "1em",
+    },
   },
   secondaryHeading: {
     marginBottom: ".75em",
     [theme.breakpoints.down("md")]: {
       fontSize: "2rem",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.5rem",
     },
   },
   secondSectionBackground: {
@@ -152,19 +180,64 @@ const useStyles = makeStyles((theme) => ({
   testimonialContainer: {
     position: "relative",
     marginTop: "5em",
-    marginBottom: "40em",
+  },
+  cardContainer: {
+    height: "30em",
+    width: "100%",
+    marginTop: "5em",
+    marginBottom: "5em",
+  },
+  bottomSectionContainer: {
+    background: theme.palette.common.red,
+    height: "12em",
+    width: "100%",
+
+    [theme.breakpoints.down("xs")]: {
+      height: "15em",
+    },
+  },
+  simplifyBackground: {
+    background: `url(${bgSimplify}) no-repeat`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    height: "100%",
+    width: "100%",
+    position: "relative",
+  },
+  btnWhiteGrid: {
+    position: "absolute",
+    right: "5em",
+    zIndex: 9,
+
+    [theme.breakpoints.down("xs")]: {
+      right: 0,
+      textAlign: "center",
+      left: "50%",
+      transform: "translate(-50%, 10em)",
+    },
+  },
+  simplifyGrid: {
+    position: "absolute",
+    left: "5em",
+    color: theme.palette.common.lightGrey,
+
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
+      left: "50%",
+      transform: "translate(-50%, 1em)",
+    },
   },
 }));
 
-const LandingPage = () => {
+const LandingPage = ({ setValue }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   return (
     <Grid container direction="column">
-      <Grid item>
+      <Grid item style={{ marginBottom: matchesSM ? "5em" : 0 }}>
         {/* Top section */}
         <Grid
           container
@@ -201,7 +274,13 @@ const LandingPage = () => {
                   textAlign: matchesSM ? "center" : "inherit",
                 }}
               >
-                <Button variant="contained" classes={{ root: classes.btn }}>
+                <Button
+                  variant="contained"
+                  component={Link}
+                  to="/getstarted"
+                  onClick={() => setValue(6)}
+                  classes={{ root: classes.btn }}
+                >
                   Get Started
                 </Button>
               </Grid>
@@ -228,7 +307,7 @@ const LandingPage = () => {
                 style={{
                   marginLeft: matchesSM ? 0 : "7em",
                   marginTop: matchesSM ? "3em" : 0,
-                  marginBottom: matchesSM ? "3em" : 0,
+                  marginBottom: matchesSM ? "1em" : 0,
                   padding: matchesSM ? "0 3em" : 0,
                   textAlign: matchesSM ? "center" : "inherit",
                 }}
@@ -257,7 +336,9 @@ const LandingPage = () => {
                 position: "relative",
               }}
             >
-              <div className={classes.secondSectionBackground} />
+              <Hidden smDown>
+                <div className={classes.secondSectionBackground} />
+              </Hidden>
             </Grid>
           </Grid>
           <Grid item md={6}>
@@ -359,27 +440,75 @@ const LandingPage = () => {
         </Grid>
       </Grid>
       {/* Testimonial Section */}
-      <Grid item className={classes.testimonialContainer}>
-        <Grid
-          item
-          style={{
-            textAlign: "center",
-          }}
-        >
-          <Typography variant="h2" className={classes.secondaryHeading}>
+      <Grid
+        item
+        container
+        direction="column"
+        className={classes.testimonialContainer}
+      >
+        <Grid item>
+          <Typography
+            variant="h2"
+            align="center"
+            className={classes.secondaryHeading}
+          >
             What they've said
           </Typography>
         </Grid>
-        <Grid
-          container
-          justify="center"
-          style={{ position: "absolute", top: matchesMD ? "5em" : "2.5em" }}
-        >
+        <Grid item container justify="center" className={classes.cardContainer}>
           <Testimonials />
         </Grid>
       </Grid>
+      <Grid item container justify="center" style={{ marginBottom: "10em" }}>
+        <Button
+          variant="contained"
+          component={Link}
+          to="/getstarted"
+          onClick={() => setValue(6)}
+          classes={{ root: classes.btn }}
+        >
+          Get Started
+        </Button>
+      </Grid>
+      <Grid
+        item
+        container
+        direction={matchesXS ? "column" : "row"}
+        justify="space-between"
+        alignItems="center"
+        className={classes.bottomSectionContainer}
+      >
+        <Grid item className={classes.simplifyGrid}>
+          <Typography
+            variant="h4"
+            style={{
+              fontSize: matchesXS ? "1.5rem" : matchesSM ? "1.3rem" : undefined,
+            }}
+          >
+            Simplify how your team{" "}
+            <br style={{ display: matchesXS ? "none" : "inline" }} /> works
+            today
+          </Typography>
+        </Grid>
+        <Grid item className={classes.btnWhiteGrid}>
+          <Button
+            variant="contained"
+            component={Link}
+            to="/getstarted"
+            onClick={() => setValue(6)}
+            classes={{ root: classes.btnWhite }}
+          >
+            Get Started
+          </Button>
+        </Grid>
+        <div className={classes.simplifyBackground} />
+      </Grid>
     </Grid>
   );
+};
+
+LandingPage.propTypes = {
+  setValue: PropTypes.func.isRequired,
 };
 
 export default LandingPage;

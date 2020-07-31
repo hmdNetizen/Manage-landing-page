@@ -19,17 +19,23 @@ const useStyles = makeStyles((theme) => ({
     "&.MuiCard-root": {
       overflow: "visible",
     },
-    maxWidth: "40em",
     padding: "5em",
     textAlign: "center",
-    maxHeight: "20em",
+    maxWidth: "40em",
+    height: "15em",
     marginTop: "5em",
-    marginBottom: "20em",
+    marginBottom: "5em",
 
     [theme.breakpoints.down("sm")]: {
-      maxWidth: "25em",
+      maxWidth: "30em",
       paddingLeft: "2em",
       paddingRight: "2em",
+    },
+
+    [theme.breakpoints.down("xs")]: {
+      maxWidth: "25em",
+      paddingLeft: 0,
+      paddingRight: 0,
     },
   },
   cardPicture: {
@@ -38,14 +44,22 @@ const useStyles = makeStyles((theme) => ({
     top: "-10em",
     left: "50%",
     transform: "translateX(-50%)",
+
+    [theme.breakpoints.down("xs")]: {
+      width: 100,
+      top: "-9em",
+    },
   },
 }));
 
 const Testimonials = () => {
   const classes = useStyles();
+
   const params = {
     pagination: ".swiper-pagination",
+    loop: true,
     slidesPerView: "auto",
+    centeredSlides: true,
     paginationClickable: true,
     spaceBetween: 30,
   };
@@ -61,7 +75,10 @@ const Testimonials = () => {
             className={classes.cardPicture}
           />
           <CardContent>
-            <Typography variant="h6" style={{ marginBottom: "1em" }}>
+            <Typography
+              variant="h6"
+              style={{ marginBottom: "1em", marginTop: "1.5em" }}
+            >
               Anisha Li
             </Typography>
             <Typography variant="subtitle2" style={{ lineHeight: 2 }}>
@@ -72,6 +89,7 @@ const Testimonials = () => {
           </CardContent>
         </CardActionArea>
       </Card>
+
       <Card classes={{ root: classes.card }}>
         <CardActionArea>
           <CardMedia
@@ -82,7 +100,10 @@ const Testimonials = () => {
             className={classes.cardPicture}
           />
           <CardContent>
-            <Typography variant="h6" style={{ marginBottom: "1em" }}>
+            <Typography
+              variant="h6"
+              style={{ marginBottom: "1em", marginTop: "1.5em" }}
+            >
               Ali Bravo
             </Typography>
             <Typography variant="subtitle2" style={{ lineHeight: 2 }}>
@@ -93,6 +114,7 @@ const Testimonials = () => {
           </CardContent>
         </CardActionArea>
       </Card>
+
       <Card classes={{ root: classes.card }}>
         <CardActionArea>
           <CardMedia
@@ -103,7 +125,10 @@ const Testimonials = () => {
             className={classes.cardPicture}
           />
           <CardContent>
-            <Typography variant="h6" style={{ marginBottom: "1em" }}>
+            <Typography
+              variant="h6"
+              style={{ marginBottom: "1em", marginTop: "1.5em" }}
+            >
               Richard Watts
             </Typography>
             <Typography variant="subtitle2" style={{ lineHeight: 2 }}>
@@ -114,6 +139,7 @@ const Testimonials = () => {
           </CardContent>
         </CardActionArea>
       </Card>
+
       <Card classes={{ root: classes.card }}>
         <CardActionArea>
           <CardMedia
@@ -124,7 +150,10 @@ const Testimonials = () => {
             className={classes.cardPicture}
           />
           <CardContent>
-            <Typography variant="h6" style={{ marginBottom: "1em" }}>
+            <Typography
+              variant="h6"
+              style={{ marginBottom: "1em", marginTop: "1.5em" }}
+            >
               Shanai Gough
             </Typography>
             <Typography variant="subtitle2" style={{ lineHeight: 2 }}>

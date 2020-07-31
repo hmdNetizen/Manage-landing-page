@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import Slide from "@material-ui/core/Slide";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Button from "@material-ui/core/Button";
@@ -20,26 +19,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import logo from "../../images/logo.svg";
 
-function HideOnScroll(props) {
-  const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({ target: window ? window() : undefined });
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
-
-HideOnScroll.propTypes = {
-  children: PropTypes.element.isRequired,
-  window: PropTypes.func,
-};
-
-const Header = (props) => {
+const Header = ({ value, setValue }) => {
   const trigger = useScrollTrigger();
   const useStyles = makeStyles((theme) => ({
     toolbarMargin: {
@@ -57,6 +37,11 @@ const Header = (props) => {
       "&:hover": {
         background: theme.palette.secondary.light,
         boxShadow: "0 10px 15px rgba(242, 95, 58, .7)",
+      },
+    },
+    logoButton: {
+      "&:hover": {
+        background: "transparent",
       },
     },
     tab: {
@@ -102,13 +87,12 @@ const Header = (props) => {
   }));
 
   const classes = useStyles();
+
   //Responsive breakpoints
   const theme = useTheme();
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
 
   //state values
-  const [value, setValue] = useState(0);
-  const [selectedTab, setSelectedTab] = useState(0);
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -117,12 +101,10 @@ const Header = (props) => {
   const handleChange = (event, newValue) => setValue(newValue);
 
   //This handles the closure of the drawer when a menu is clicked
-  const handleClose = () => {
-    setOpenDrawer(false);
-  };
+  const handleClose = () => setOpenDrawer(false);
 
   const tabs = [
-    { id: 0, name: "Pricing", link: "/" },
+    { id: 0, name: "Pricing", link: "/pricing" },
     { id: 1, name: "Products", link: "/product" },
     { id: 2, name: "About Us", link: "/about" },
     { id: 3, name: "Careers", link: "/careers" },
@@ -135,8 +117,13 @@ const Header = (props) => {
         case tab.link:
           if (value !== tab.id) {
             setValue(tab.id);
-            setSelectedTab(tab.id);
           }
+          break;
+        case "/":
+          setValue(5);
+          break;
+        case "/getstarted":
+          setValue(6);
           break;
         default:
           break;
@@ -165,7 +152,16 @@ const Header = (props) => {
           />
         ))}
       </Tabs>
-      <Button variant="contained" classes={{ root: classes.btn }}>
+      <Button
+        component={Link}
+        to="/getstarted"
+        onClick={() => {
+          setValue(6);
+          handleClose();
+        }}
+        variant="contained"
+        classes={{ root: classes.btn }}
+      >
         Get Started
       </Button>
     </Fragment>
@@ -193,11 +189,11 @@ const Header = (props) => {
               classes={{ selected: classes.mobileTabSelected }}
               component={Link}
               to={tab.link}
-              onClick={() => {
-                setSelectedTab(tab.id);
+              onClick={(event) => {
+                setValue(event, tab.id);
                 handleClose();
               }}
-              selected={selectedTab === tab.id}
+              selected={value === tab.id}
             >
               <ListItemText>{tab.name}</ListItemText>
             </ListItem>
@@ -221,10 +217,7 @@ const Header = (props) => {
 
   return (
     <Fragment>
-      {/* <HideOnScroll
-        {...props}
-        style={{ background: trigger ? "#fff" : "transparent" }}
-      > */}
+      {/* </HideOnScroll> */}
       <AppBar
         elevation={trigger ? 24 : 0}
         style={{
@@ -235,14 +228,29 @@ const Header = (props) => {
         }}
       >
         <Toolbar className={classes.toolbar}>
-          <img src={logo} alt="Company Logo" />
+          <Button
+            disableRipple
+            className={classes.logoButton}
+            component={Link}
+            to="/"
+            onClick={() => {
+              setValue(5);
+            }}
+          >
+            <img src={logo} alt="Company Logo" />
+          </Button>
           {matchesMD ? mobileTabs : desktopTabs}
         </Toolbar>
       </AppBar>
-      {/* </HideOnScroll> */}
       <Toolbar className={classes.toolbarMargin} />
     </Fragment>
   );
+};
+
+Header.propTypes = {
+  value: PropTypes.number.isRequired,
+  setValue: PropTypes.func.isRequired,
+  selectedTab: PropTypes.number.isRequired,
 };
 
 export default Header;

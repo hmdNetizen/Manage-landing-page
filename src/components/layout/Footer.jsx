@@ -1,20 +1,20 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import Button from "@material-ui/core/Button";
-// import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "@material-ui/core/Hidden";
 
 import footerLogo from "../../images/logo-footer.svg";
 import SocialIcon from "./../SocialIcon";
 
-const Footer = () => {
+const Footer = ({ setValue }) => {
   const useStyles = makeStyles((theme) => ({
     footer: {
-      background: theme.palette.common.blue,
+      background: theme.palette.common.darkBlue,
       padding: "3em 0",
     },
     footerLink: {
@@ -65,6 +65,10 @@ const Footer = () => {
       ...theme.typography.btn,
       marginTop: ".5em",
       marginLeft: ".5em",
+
+      "&:hover": {
+        background: theme.palette.secondary.light,
+      },
     },
   }));
   const classes = useStyles();
@@ -124,6 +128,7 @@ const Footer = () => {
                     component={Link}
                     to="/"
                     className={classes.footerLink}
+                    onClick={() => setValue(5)}
                   >
                     Home
                   </Typography>
@@ -132,6 +137,7 @@ const Footer = () => {
                     component={Link}
                     to="/pricing"
                     className={classes.footerLink}
+                    onClick={() => setValue(0)}
                   >
                     Pricing
                   </Typography>
@@ -140,6 +146,7 @@ const Footer = () => {
                     component={Link}
                     to="/product"
                     className={classes.footerLink}
+                    onClick={() => setValue(1)}
                   >
                     Product
                   </Typography>
@@ -148,6 +155,7 @@ const Footer = () => {
                     component={Link}
                     to="/about"
                     className={classes.footerLink}
+                    onClick={() => setValue(2)}
                   >
                     About Us
                   </Typography>
@@ -164,6 +172,7 @@ const Footer = () => {
                     variant="subtitle2"
                     component={Link}
                     to="/careers"
+                    onClick={() => setValue(3)}
                   >
                     Careers
                   </Typography>
@@ -172,6 +181,7 @@ const Footer = () => {
                     variant="subtitle2"
                     component={Link}
                     to="/community"
+                    onClick={() => setValue(4)}
                   >
                     Community
                   </Typography>
@@ -180,6 +190,7 @@ const Footer = () => {
                     variant="subtitle2"
                     component={Link}
                     to="/about"
+                    onClick={() => setValue(2)}
                   >
                     Privacy Policy
                   </Typography>
@@ -211,7 +222,7 @@ const Footer = () => {
                   <Grid
                     item
                     style={{
-                      marginTop: "3em",
+                      marginTop: "2em",
                       textAlign: "right",
                     }}
                   >
@@ -223,6 +234,23 @@ const Footer = () => {
                       }}
                     >
                       &copy;Copyright 2020. All Right Reserved.
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    direction="column"
+                    alignItems="flex-end"
+                    style={{ color: theme.palette.common.lightGrey }}
+                  >
+                    <Typography variant="caption">
+                      Challenge by Frontend Mentor
+                    </Typography>
+                    <Typography variant="caption">
+                      Coded by{" "}
+                      <span style={{ color: theme.palette.common.red }}>
+                        Hamed Jimoh
+                      </span>
                     </Typography>
                   </Grid>
                 </Grid>
@@ -371,12 +399,36 @@ const Footer = () => {
                   &copy;Copyright 2020. All Right Reserved.
                 </Typography>
               </Grid>
+              <Grid
+                item
+                container
+                direction="column"
+                alignItems="center"
+                style={{
+                  marginTop: ".5em",
+                  color: theme.palette.common.lightGrey,
+                }}
+              >
+                <Typography variant="caption" style={{ marginBottom: ".5em" }}>
+                  Challenge by Frontend Mentor
+                </Typography>
+                <Typography variant="caption">
+                  Coded by{" "}
+                  <span style={{ color: theme.palette.common.red }}>
+                    Hamed Jimoh
+                  </span>
+                </Typography>
+              </Grid>
             </Grid>
           </Grid>
         </Hidden>
       </Grid>
     </footer>
   );
+};
+
+Footer.propTypes = {
+  setValue: PropTypes.func.isRequired,
 };
 
 export default Footer;
